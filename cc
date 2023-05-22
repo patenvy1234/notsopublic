@@ -24,3 +24,7 @@ steps:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'BuildArtifacts'
     publishLocation: 'Container'
+    
+    
+    
+    -i -v $(Pipeline.Workspace):/src loadtests/local.j
