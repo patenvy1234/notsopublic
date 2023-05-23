@@ -163,3 +163,7 @@ echo "Percentage Degradation in http_req_duration average: $percentage_degradati
 
     - script: echo $(HttpReqDurationAvg)
       displayName: 'Print Variable Value'
+
+Get-ChildItem -File -Recurse | ForEach-Object {
+    Write-Host $_.FullName
+}
