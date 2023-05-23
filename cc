@@ -73,3 +73,58 @@ steps:
     artifactName: 'k6'
     publishLocation: 'Container'
 
+
+import http from 'k6/http';
+import { check, fail } from 'k6';
+import { jUnit, textSummary } from 'https://jslib.k6.io/k6-summary/0.0.1/index.js';
+
+export const options = {
+  stages: [
+    { duration: '10s', target: 10 },
+    { duration: '20s' },
+    { duration: '10s', target: 5},
+  ],
+  thresholds: {
+    http_req_duration: ['p(95)<250'],
+    // Add other thresholds as needed
+  },
+};
+
+export default function () {
+  let res = http.get(`${__ENV.API_PROTOCOL}://${__ENV.API_BASEURL}/Product/GetAllProducts`);
+  
+  // Check response status
+  check(res, {
+    'is status 200': (r) => r.status === 200,
+  });
+  
+  // Check threshold limits
+  check(res, {
+    'response duration is within threshold': (r) => r.timings.duration <= 250,
+    // Add other threshold checks as needed
+  }) || fail('Threshold limit breached');
+}
+
+export function handleSummary(data) {
+  let filepath = `./${__ENV.TESTRESULT_FILENAME}-result.xml`;
+
+  // Include threshold failures in the summary report
+  const thresholdBreaches = Object.entries(data.thresholds).map(([metric, { breaches }]) => {
+    return breaches.map((b) => {
+      return {
+        name: `${metric} ${b.threshold}`,
+        message: `${b.metric} ${b.threshold} ${b.operator} ${b.value}`,
+        type: 'failure',
+      };
+    });
+  }).flat();
+
+  data.errors.push(...thresholdBreaches);
+  
+  return {
+    'stdout': textSummary(data, { indent: ' ', enableColors: true }), 
+    'stderr': textSummary(data, { indent: ' ', enableColors: true, onlyFailed: true }),
+    './loadtest-result.xml': jUnit(data), 
+  };
+}
+
