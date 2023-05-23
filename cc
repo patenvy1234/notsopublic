@@ -150,3 +150,16 @@ echo "Percentage Degradation in http_req_duration average: $percentage_degradati
 }
 
 // 'stderr': textSummary(data, { indent: ' ', enableColors: true, onlyFailed: true })
+
+
+
+ $filePath = '<path_to_json_file>'  # Replace with the actual path to your JSON file
+          $jsonData = Get-Content -Path $filePath -Raw | ConvertFrom-Json
+          $httpReqDurationAvg = $jsonData.metrics.http_req_duration.avg
+
+          Write-Host "##vso[task.setvariable variable=HttpReqDurationAvg;isOutput=true]$httpReqDurationAvg"
+
+      displayName: 'Read JSON File and Save Variable'
+
+    - script: echo $(HttpReqDurationAvg)
+      displayName: 'Print Variable Value'
