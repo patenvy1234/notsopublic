@@ -121,6 +121,27 @@ export function handleSummary(data) {
 
   data.errors.push(...thresholdBreaches);
   
+  
+  
+  #!/bin/bash
+
+# Read the contents of the first JSON file
+file1=$(cat file1.json)
+
+# Read the contents of the second JSON file
+file2=$(cat file2.json)
+
+# Extract the http_req_duration average from both files
+avg1=$(echo "$file1" | jq -r '.metrics.http_req_duration.values.avg')
+avg2=$(echo "$file2" | jq -r '.metrics.http_req_duration.values.avg')
+
+# Calculate the percentage degradation
+percentage_degradation=$(bc <<< "scale=2; (($avg2 - $avg1) / $avg1) * 100")
+
+# Output the percentage degradation
+echo "Percentage Degradation in http_req_duration average: $percentage_degradation%"
+
+  
   return {
     'stdout': textSummary(data, { indent: ' ', enableColors: true }), 
     'stderr': textSummary(data, { indent: ' ', enableColors: true, onlyFailed: true }),
