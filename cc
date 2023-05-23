@@ -128,3 +128,4 @@ export function handleSummary(data) {
   };
 }
 
+// 'stderr': textSummary(data, { indent: ' ', enableColors: true, onlyFailed: true })
