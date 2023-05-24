@@ -167,3 +167,11 @@ echo "Percentage Degradation in http_req_duration average: $percentage_degradati
 Get-ChildItem -File -Recurse | ForEach-Object {
     Write-Host $_.FullName
 }
+
+
+
+$jsonFilePath = "C:\path\to\your\json\file.json"
+$jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
+$jsonContent | Format-Table -AutoSize   # Display as formatted table
+# or
+$jsonContent | ConvertTo-Json            # Display as JSON
