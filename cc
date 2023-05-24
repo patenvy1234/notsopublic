@@ -175,3 +175,8 @@ $jsonContent = Get-Content -Path $jsonFilePath -Raw | ConvertFrom-Json
 $jsonContent | Format-Table -AutoSize   # Display as formatted table
 # or
 $jsonContent | ConvertTo-Json            # Display as JSON
+
+
+jsonData=$(cat /path/to/your/file.json)
+httpReqDurationAvg=$(echo "$jsonData" | jq -r '.metrics.http_req_duration.avg')
+echo "##vso[task.setvariable variable=HttpReqDurationAvg;isOutput=true]$httpReqDurationAvg"
