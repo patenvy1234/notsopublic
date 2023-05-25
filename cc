@@ -215,3 +215,5 @@ else
 fi
 
 
+echo "##vso[task.logissue type=error]Relative difference ($relativeDifference%) is greater than 5%. Failing the pipeline."
+    exit 1
