@@ -200,4 +200,18 @@ if ($relativeDifference -gt 5) {
     Write-Host "Relative difference ($relativeDifference%) is within the acceptable range."
 }
 
+variable1=$VARIABLE1
+variable2=$VARIABLE2
+
+# Calculate the relative difference
+relativeDifference=$(echo "scale=2; (($variable2 - $variable1) / $variable1) * 100" | bc)
+
+# Check if the relative difference exceeds 5%
+if (( $(echo "$relativeDifference > 5" | bc -l) )); then
+    echo "Relative difference ($relativeDifference%) is greater than 5%. Failing the pipeline."
+    exit 1
+else
+    echo "Relative difference ($relativeDifference%) is within the acceptable range."
+fi
+
 
