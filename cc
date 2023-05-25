@@ -185,3 +185,19 @@ echo "##vso[task.setvariable variable=HttpReqDurationAvg;isOutput=true]$httpReqD
 GET https://vsrm.dev.azure.com/<organization>/<project>/_apis/release/releases/<releaseId>?api-version=6.0
 GET https://vsrm.dev.azure.com/<organization>/<project>/_apis/release/releases/<releaseId>?api-version=6.0
 
+
+$variable1 = $env:VARIABLE1
+$variable2 = $env:VARIABLE2
+
+# Calculate the relative difference
+$relativeDifference = ($variable2 - $variable1) / $variable1 * 100
+
+# Check if the relative difference exceeds 5%
+if ($relativeDifference -gt 5) {
+    Write-Host "Relative difference ($relativeDifference%) is greater than 5%. Failing the pipeline."
+    exit 1
+} else {
+    Write-Host "Relative difference ($relativeDifference%) is within the acceptable range."
+}
+
+
