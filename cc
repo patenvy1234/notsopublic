@@ -217,3 +217,13 @@ fi
 
 echo "##vso[task.logissue type=error]Relative difference ($relativeDifference%) is greater than 5%. Failing the pipeline."
     exit 1
+    
+    
+    
+    
+    echo $SYSTEM_ACCESSTOKEN | az devops login
+      az pipelines variable-group variable update --group-id $(group_id) \
+        --name NAME_OF_THE_VARIABLE \
+        --value "${newValue}" \
+        --org https://dev.azure.com/YOUR_ORGANIZATION_NAME \
+        --project AZURE_DEVOPS_PROJECT
