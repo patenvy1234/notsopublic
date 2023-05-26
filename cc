@@ -1,3 +1,7 @@
+
+GET https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variablegroups?groupName={groupName}&api-version=6.1-preview.2
+
+
 trigger:
   branches:
     include:
