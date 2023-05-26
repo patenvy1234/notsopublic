@@ -5,6 +5,29 @@ curl -X GET \
   -H "Authorization: Bearer {PAT}" \
   "https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variablegroups?groupName={groupName}&api-version=6.1-preview.2"
 
+
+curl -X PATCH \
+  -H "Authorization: Bearer {PAT}" \
+  -H "Content-Type: application/json-patch+json" \
+  -d '[{
+    "op": "add",
+    "path": "/variables/Variable1",
+    "value": {
+      "value": "UpdatedValue1"
+    }
+  },{
+    "op": "add",
+    "path": "/variables/Variable2",
+    "value": {
+      "value": "UpdatedValue2"
+    }
+  }]' \
+  "https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variablegroups/{groupId}?api-version=6.1-preview.2"
+
+
+
+
+
 trigger:
   branches:
     include:
