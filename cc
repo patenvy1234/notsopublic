@@ -1,6 +1,8 @@
 
 GET https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variablegroups?groupName={groupName}&api-version=6.1-preview.2
 
+top -b -n 1 | grep "Cpu(s)" | awk '{print $2 + $4}'
+
 curl -X PATCH \
   -H "Authorization: Bearer <personal-access-token>" \
   -H "Content-Type: application/json-patch+json" \
