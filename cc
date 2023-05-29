@@ -2,7 +2,7 @@
 GET https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variablegroups?groupName={groupName}&api-version=6.1-preview.2
 
 top -b -n 1 | grep "Cpu(s)" | awk '{print $2 + $4}'
-
+sar -u 1 10 | awk 'NR>3 {print 100 - $NF}'
 sudo apt-get install sysstat -y
 
 sar -u 1 1 | tail -n 1 | awk '{print 100 - $NF}'
