@@ -5,6 +5,9 @@ top -b -n 1 | grep "Cpu(s)" | awk '{print $2 + $4}'
 sar -u 1 10 | awk 'NR>3 {print 100 - $NF}'
 sudo apt-get install sysstat -y
 
+top -b -n 1 -d 1 | awk '/^%Cpu/ {if ($2+$4 > max) max=$2+$4} END {print max}'
+
+
 sar -u 1 1 | tail -n 1 | awk '{print 100 - $NF}'
 
 curl -X PATCH \
