@@ -3,6 +3,10 @@ GET https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variabl
 
 top -b -n 1 | grep "Cpu(s)" | awk '{print $2 + $4}'
 
+sudo apt-get install sysstat -y
+
+sar -u 1 1 | tail -n 1 | awk '{print 100 - $NF}'
+
 curl -X PATCH \
   -H "Authorization: Bearer <personal-access-token>" \
   -H "Content-Type: application/json-patch+json" \
