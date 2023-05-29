@@ -276,3 +276,35 @@ echo "##vso[task.logissue type=error]Relative difference ($relativeDifference%) 
         --value "${newValue}" \
         --org https://dev.azure.com/YOUR_ORGANIZATION_NAME \
         --project AZURE_DEVOPS_PROJECT
+
+
+
+
+scenarios: {
+    contacts: {
+      executor: 'ramping-arrival-rate',
+
+      // Start iterations per `timeUnit`
+      startRate: 0,
+
+      // Start `startRate` iterations per minute
+      timeUnit: '1s',
+
+      // Pre-allocate necessary VUs.
+      preAllocatedVUs: 0,
+      maxVUs : 1000,
+
+
+      stages: [
+   
+        // Linearly ramp-up to starting 600 iterations per `timeUnit` over the following two minutes.
+        { target: 100, duration: '5s' },
+
+        // Cntinue starting 600 iterations per `timeUnit` for the following four minutes.
+        { target: 100, duration: '10s' },
+
+        // Linearly ramp-down to starting 60 iterations per `timeUnit` over the last two minute.
+        { target: 0, duration: '5s' },
+      ],
+    },
+  },
