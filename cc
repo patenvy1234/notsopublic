@@ -3,8 +3,8 @@ kubectl run k6 --image=k6io/k6 --restart=Never -- --help
 
 kubectl exec -it <pod_name> -- k6 run <test_script.js>
 
-curl -O https://dl.google.com/go/go<GO_VERSION>.linux-amd64.tar.gz \
-&& sudo tar -xvf go<GO_VERSION>.linux-amd64.tar.gz -C /usr/local \
+curl -O https://dl.google.com/go/goq.20.4.linux-amd64.tar.gz \
+&& sudo tar -xvf go1.20.4.linux-amd64.tar.gz -C /usr/local \
 && echo "export PATH=\$PATH:/usr/local/go/bin" >> ~/.bashrc \
 && echo "export GOPATH=\$HOME/go" >> ~/.bashrc \
 && echo "export PATH=\$PATH:\$GOPATH/bin" >> ~/.bashrc \
