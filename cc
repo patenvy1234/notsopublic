@@ -1,4 +1,18 @@
 
+kubectl run k6 --image=k6io/k6 --restart=Never -- --help
+
+kubectl exec -it <pod_name> -- k6 run <test_script.js>
+
+
+
+
+
+
+
+ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz
+
+
+
 GET https://dev.azure.com/{organization}/{project}/_apis/distributedtask/variablegroups?groupName={groupName}&api-version=6.1-preview.2
 
 top -b -n 1 | grep "Cpu(s)" | awk '{print $2 + $4}'
