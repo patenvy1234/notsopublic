@@ -4,6 +4,8 @@ kubectl run k6 --image=k6io/k6 --restart=Never -- --help
 kubectl exec -it <pod_name> -- k6 run <test_script.js>
 
 
+curl -O https://dl.google.com/go/go1.20.4.linux-amd64.tar.gz && sudo tar -xvf go1.20.4.linux-amd64.tar.gz -C /usr/local
+
 
 curl -O https://dl.google.com/go/go<VERSION>.linux-amd64.tar.gz && sudo tar -xvf go<VERSION>.linux-amd64.tar.gz -C /usr/local
 
