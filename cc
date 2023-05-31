@@ -1,3 +1,20 @@
+
+Install-Module -Name VSTeam -Force
+
+$pat = "Personal Access Token"  # Replace with your own Personal Access Token
+$orgUrl = "https://dev.azure.com/YourOrganizationName"  # Replace with your Azure DevOps organization URL
+$project = "YourProjectName"  # Replace with your Azure DevOps project name
+
+# Authenticate with Azure DevOps using Personal Access Token
+Connect-VSTeamAccount -AccessToken $pat -AccountUrl $orgUrl
+
+# Define the variable name and value
+$variableName = "MyVariable"
+$variableValue = "MyValue"
+
+# Set the variable in the pipeline
+Set-VSTeamVariable -ProjectName $project -VariableName $variableName -VariableValue $variableValue
+
 $jsonString = $lkg -replace '\r?\n','' -replace '\s+'
 
 # Assuming you have a JSON string in the variable $jsonString
