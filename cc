@@ -3,6 +3,7 @@ $jsonString = $lkg -replace '\r?\n','' -replace '\s+'
 # Assuming you have a JSON string in the variable $jsonString
 jsonObject=$(jq --arg jsonString "$jsonString" -n '$jsonString | fromjson')
 
+Write-Host "##vso[task.setvariable variable=PipelineVariableName]VariableValue"
 
 sonObject=$(echo "$jsonString" | jq '.')
 
