@@ -1,5 +1,9 @@
 $jsonString = $lkg -replace '\r?\n','' -replace '\s+'
 
+# Assuming you have a JSON string in the variable $jsonString
+jsonObject=$(jq --arg jsonString "$jsonString" -n '$jsonString | fromjson')
+
+
 sonObject=$(echo "$jsonString" | jq '.')
 
 jsonObject=$(echo "$jsonString" | jq --arg jsonString "$jsonString" '. as $json | $json | fromjson')
