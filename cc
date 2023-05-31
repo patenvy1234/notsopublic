@@ -1,5 +1,7 @@
 $jsonString = $lkg -replace '\r?\n','' -replace '\s+'
 
+sonObject=$(echo "$jsonString" | jq '.')
+
 # Convert JSON string to JSON object
 $jsonObject = ConvertFrom-Json -InputObject $jsonString
 
