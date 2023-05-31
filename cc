@@ -1,3 +1,120 @@
+{
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 20050.69906
+  },
+  "metrics": {
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": "@{max=924.276062; p(90)=308.953249; p(95)=476.9545769; avg=124.71312956083; min=4.518524; med=82.864757}"
+    },
+    "http_req_tls_handshaking": {
+      "type": "trend",
+      "contains": "time",
+      "values": "@{min=0; med=0; max=13.257341; p(90)=0; p(95)=0; avg=0.106053631830874}"
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": "@{avg=0.0443709912245713; min=0.016211; med=0.032357; max=25.730234; p(90)=0.0445018; p(95)=0.0492848}"
+    },
+    "http_reqs": {
+      "type": "counter",
+      "contains": "default",
+      "values": "@{count=2507; rate=125.033047102149}"
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": "@{rate=0; passes=0; fails=2507}"
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": "@{value=6; min=2; max=29}"
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": "@{min=0.000821; med=0.00147; max=31.850221; p(90)=0.0021102; p(95)=0.0023797; avg=0.142989405265257}"
+    },
+    "vus_max": {
+      "contains": "default",
+      "values": "@{value=30; min=30; max=30}",
+      "type": "gauge"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": "@{med=82.114991; max=923.574214; p(90)=308.2357396; p(95)=476.2938964; avg=123.733731508576; min=3.773699}"
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": "@{avg=0.0268021208615876; min=0; med=0; max=13.677725; p(90)=0; p(95)=0}"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": "@{count=9902248; rate=493860.486877209}"
+    },
+    "data_sent": {
+      "values": "@{count=334606; rate=16687.9967126692}",
+      "type": "counter",
+      "contains": "data"
+    },
+    "http_req_duration": {
+      "values": "@{min=3.819621; med=82.145855; max=923.616542; p(90)=308.275711; p(95)=476.3350163; avg=123.789769893099}",
+      "thresholds": "@{p(95)<4000=}",
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_sending": {
+      "values": "@{p(95)=0.0107638; avg=0.0116673932987635; min=0.00423; med=0.006849; max=10.454438; p(90)=0.0096482}",
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_duration{expected_response:true}": {
+      "contains": "time",
+      "values": "@{min=3.819621; med=82.145855; max=923.616542; p(90)=308.275711; p(95)=476.3350163; avg=123.789769893099}",
+      "type": "trend"
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": "@{passes=2507; fails=0; rate=1}"
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": "@{count=2507; rate=125.033047102149}"
+    }
+  },
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+      "@{path=::is status 200; id=548d37ca5f33793206f7832e7cea54fb; passes=2507; fails=0; name=is status 200}"
+    ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "max",
+      "p(90)",
+      "p(95)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  }
+}
+
 
 kubectl run k6 --image=k6io/k6 --restart=Never -- --help
 
