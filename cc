@@ -1,3 +1,50 @@
+# Variables to compare
+$variable1 = "$(Variable1)" # Replace with the actual variable name in ADO
+$variable2 = "$(Variable2)" # Replace with the actual variable name in ADO
+
+# Perform comparison logic
+$comparisonResult = if ($variable1 -eq $variable2) { "Variables are equal" } else { "Variables are not equal" }
+
+# Generate HTML report
+$htmlContent = @"
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Variable Comparison Report</title>
+</head>
+<body>
+    <h1>Variable Comparison Report</h1>
+    <table>
+        <tr>
+            <th>Variable 1</th>
+            <th>Variable 2</th>
+            <th>Comparison Result</th>
+        </tr>
+        <tr>
+            <td>$variable1</td>
+            <td>$variable2</td>
+            <td>$comparisonResult</td>
+        </tr>
+    </table>
+</body>
+</html>
+"@
+
+# Save HTML report to a file
+$reportFilePath = "variable_comparison_report.html"
+$htmlContent | Out-File -FilePath $reportFilePath -Encoding UTF8
+
+# Output the report file path for reference
+Write-Host "Variable comparison report generated: $reportFilePath"
+
+
+
+
+
+
+
+
+
 Hello Everyone,
 
 Allow me to introduce myself as the latest addition to our remarkable Azure Front Door team, joining you all as an intern.
