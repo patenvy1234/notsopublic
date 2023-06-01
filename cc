@@ -7,6 +7,44 @@ My name is Pathik Patel and I am currently pursuing Maths and Computing at DAIIC
 As an intern, I am excited to collaborate, contribute, and grow alongside all of you and also seek the valuable inputs and guidance of my mentors and managers, as their insights will be instrumental in shaping myself as a person.
 
 
+# Install required PowerShell modules
+Install-Module -Name Az -Force -AllowClobber
+
+# Connect to your Azure DevOps account
+Connect-AzAccount
+
+# Specify the Azure DevOps organization, project, and deployment job group details
+$orgUrl = "https://dev.azure.com/YourOrganization"
+$projectName = "YourProject"
+$deploymentJobGroup = "YourDeploymentJobGroup"
+
+# Specify the deployment job name
+$deploymentJobName = "YourDeploymentJob"
+
+# Get the deployment job details
+$jobDetails = Get-AzDevOpsArtifact -Organization $orgUrl -Project $projectName -Name $deploymentJobGroup -Type JobGroup
+
+# Get the deployment job ID
+$jobId = $jobDetails.id
+
+# Get the deployment job group instance ID
+$instanceId = $jobDetails.resource.data.information.deployments | Where-Object { $_.name -eq $deploymentJobName } | Select-Object -ExpandProperty id
+
+# Update the deployment job instance status to completed
+$jobStatusUrl = "$orgUrl/$projectName/_apis/distributedtask/hubs/jobResults/$jobId/$instanceId?api-version=6.0-preview.1"
+$jobStatusBody = @{
+    status = "completed"
+} | ConvertTo-Json
+
+Invoke-AzRestMethod -Method Patch -Uri $jobStatusUrl -Body $jobStatusBody
+
+# Set the desired state of the VMs to turned off
+$desiredStateUrl = "$orgUrl/$projectName/_apis/distributedtask/hubs/jobRequests/$jobId/$instanceId/properties?api-version=6.0-preview.1"
+$desiredStateBody = @{
+    desiredState = "2" # 2 indicates 'TurnedOff' state
+} | ConvertTo-Json
+
+Invoke-AzRestMethod -Method Patch -Uri $desiredStateUrl -Body $desiredStateBody
 
 
 
