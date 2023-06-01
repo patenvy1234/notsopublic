@@ -1,3 +1,50 @@
+# Define the variables to compare
+$variable1 = 10
+$variable2 = 15
+$variable3 = 20
+$variable4 = 25
+$variable5 = 30
+$variable6 = 35
+$variable7 = 40
+$variable8 = 45
+$variable9 = 50
+$variable10 = 55
+
+# Define the range for comparison
+$range = 5
+
+# Create two arrays with the variables to compare
+$firstSet = $variable1, $variable2, $variable3, $variable4, $variable5
+$secondSet = $variable6, $variable7, $variable8, $variable9, $variable10
+
+# Generate the output
+$output = ""
+for ($i = 0; $i -lt $firstSet.Count; $i++) {
+    $diff = [Math]::Abs($firstSet[$i] - $secondSet[$i])
+    $isInRange = $diff -lt $range
+    $output += "╔════════════╦════════════╦════════════════════╗`n"
+    $output += "║ Variable $($i+1)  ║ Variable $($i+6)  ║ Difference (±$range) ║`n"
+    $output += "╠════════════╬════════════╬════════════════════╣`n"
+    $output += "║ $($firstSet[$i])      ║ $($secondSet[$i])      ║ $($diff.ToString())                  "
+    if ($isInRange) {
+        $output += "√"
+    }
+    else {
+        $output += "X"
+    }
+    $output += "`n"
+    $output += "╚════════════╩════════════╩════════════════════╝`n"
+}
+
+# Output the result
+$output
+
+
+
+
+
+
+
 # Variables to compare
 $variable1 = "$(Variable1)" # Replace with the actual variable name in ADO
 $variable2 = "$(Variable2)" # Replace with the actual variable name in ADO
