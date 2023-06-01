@@ -1,3 +1,17 @@
+Hello Everyone,
+
+Allow me to introduce myself as the latest addition to our remarkable Azure Front Door team, joining you all as an intern.
+
+My name is Pathik Patel and I am currently pursuing Maths and Computing at DAIICT. I have a diverse range of interests that keep me engaged outside of work. I have particular interest in Chess, Football and F1 also a great fan of Anime also I am open to feedback and always strive for continuous improvement.
+
+As an intern, I am excited to collaborate, contribute, and grow alongside all of you and also seek the valuable inputs and guidance of my mentors and managers, as their insights will be instrumental in shaping myself as a person.
+
+
+
+
+
+
+
 # Install-Module -Name UniversalDashboard if the module is not already installed
 
 Import-Module -Name UniversalDashboard
