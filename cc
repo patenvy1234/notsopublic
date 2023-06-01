@@ -1,3 +1,30 @@
+# Install-Module -Name UniversalDashboard if the module is not already installed
+
+Import-Module -Name UniversalDashboard
+
+# Set the response times for Build A and Build B
+$buildAResponseTime = 10.5 # Replace with the actual response time for Build A
+$buildBResponseTime = 8.2  # Replace with the actual response time for Build B
+
+# Create a new dashboard
+$dashboard = New-UDDashboard -Title "Response Time Dashboard" -Content {
+    New-UDRow -Columns {
+        New-UDColumn -Size 6 -Content {
+            New-UDCard -Title "Build A" -Content {
+                New-UDTypography -Text "Response Time: $buildAResponseTime ms"
+            }
+        }
+        New-UDColumn -Size 6 -Content {
+            New-UDCard -Title "Build B" -Content {
+                New-UDTypography -Text "Response Time: $buildBResponseTime ms"
+            }
+        }
+    }
+}
+
+# Start the dashboard server
+Start-UDDashboard -Port 8080 -Dashboard $dashboard -Wait
+
 
 Install-Module -Name VSTeam -Force
 
