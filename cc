@@ -1,3 +1,29 @@
+#!/bin/bash
+
+# Install k6
+echo "Installing k6..."
+curl -sSL https://install.k6.io | bash
+export PATH="$HOME/.k6/bin:$PATH"
+
+# Run script1.js and script2.js in parallel
+echo "Running scripts in parallel..."
+k6 run script1.js &
+k6 run script2.js &
+
+# Wait for both scripts to finish
+wait
+
+# Compare the results
+echo "Comparing the results..."
+# Add your comparison logic here
+
+echo "Script execution completed."
+
+
+
+
+
+
 # Define the variables to compare
 $variable1 = 10
 $variable2 = 15
