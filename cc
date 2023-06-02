@@ -1,5 +1,17 @@
 #!/bin/bash
 
+json_file="path/to/your/file.json"
+
+# Read http_req_duration average value
+avg=$(jq -r '.metrics.http_req_duration.values.avg' "$json_file")
+
+echo "Average http_req_duration: $avg"
+
+
+
+
+#!/bin/bash
+
 # Install k6
 echo "Installing k6..."
 curl -sSL https://install.k6.io | bash
