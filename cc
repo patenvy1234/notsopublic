@@ -1,3 +1,52 @@
+from flask import Flask, render_template, request
+from azure.storage.blob import BlobServiceClient
+import json
+
+app = Flask(__name__)
+
+# Azure Blob Storage credentials
+connection_string = '<your_blob_connection_string>'
+container_name = '<your_container_name>'
+
+# Initialize Azure Blob Service
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+container_client = blob_service_client.get_container_client(container_name)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        search_term = request.form['search']
+        blobs = search_blobs(search_term)
+        data = get_blob_contents(blobs)
+        return render_template('index.html', data=data)
+    return render_template('index.html', data=None)
+
+def search_blobs(search_term):
+    blob_names = []
+    for blob in container_client.list_blobs():
+        if search_term.lower() in blob.name.lower():
+            blob_names.append(blob.name)
+    return blob_names
+
+def get_blob_contents(blob_names):
+    data = []
+    for name in blob_names:
+        blob_client = container_client.get_blob_client(name)
+        blob_data = blob_client.download_blob().readall()
+        json_data = json.loads(blob_data)
+        data.append(json_data)
+    return data
+
+if __name__ == '__main__':
+    app.run()
+
+
+
+
+
+
+
+
 #!/bin/bash
 
 json_file="path/to/your/file.json"
