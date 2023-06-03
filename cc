@@ -1,3 +1,139 @@
+from flask import Flask, render_template, request, jsonify
+from azure.storage.blob import BlobServiceClient
+import json
+
+app = Flask(__name__)
+
+# Azure Blob Storage credentials
+connection_string = '<your_blob_connection_string>'
+container_name = '<your_container_name>'
+
+# Initialize Azure Blob Service
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+container_client = blob_service_client.get_container_client(container_name)
+
+# Get the difference in http_req_duration avg between two JSON files
+def get_duration_diff(file1_data, file2_data):
+    avg1 = file1_data['metrics']['http_req_duration']['values']['avg']
+    avg2 = file2_data['metrics']['http_req_duration']['values']['avg']
+    diff = avg1 - avg2
+    return diff
+
+# Route for the home page
+@app.route('/', methods=['GET'])
+def home():
+    return render_template('index.html')
+
+# Route for processing the search request
+@app.route('/search', methods=['POST'])
+def search():
+    file1_name = request.form['file1']
+    file2_name = request.form['file2']
+    
+    # Retrieve file contents from Azure Blob storage
+    file1_blob_client = container_client.get_blob_client(file1_name)
+    file1_content = file1_blob_client.download_blob().readall().decode('utf-8')
+    file1_data = json.loads(file1_content)
+    
+    file2_blob_client = container_client.get_blob_client(file2_name)
+    file2_content = file2_blob_client.download_blob().readall().decode('utf-8')
+    file2_data = json.loads(file2_content)
+    
+    # Calculate the difference in http_req_duration avg
+    diff = get_duration_diff(file1_data, file2_data)
+    
+    # Return the difference as JSON response
+    response = {
+        'file1': file1_name,
+        'file2': file2_name,
+        'duration_diff': diff
+    }
+    return jsonify(response)
+
+if __name__ == '__main__':
+    app.run()
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Search</title>
+  </head>
+  <body>
+    <h1>File Search</h1>
+    <form method="post" action="/search">
+      <label for="file1">Select File 1:</label>
+      <select name="file1">
+        {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <label for="file2">Select File 2:</label>
+      <select name="file2">
+        {% for file in files %}
+          <option value="{{ file }}">{{ file }}</option>
+        {% endfor %}
+      </select>
+      <br>
+      <button type="submit">Search</button>
+    </form>
+    <div id="result"></div>
+    
+    <script>
+      // Handle form submission with AJAX
+      document.querySelector('form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        var form = event.target;
+        var url = form.action;
+        var formData = new FormData(form);
+        
+        fetch(url, {
+          method: 'POST',
+          body: formData
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(data) {
+          displayResult(data);
+        })
+        .catch(function(error) {
+          console.error('Error:', error);
+        });
+      });
+
+      // Function to display the result
+      function displayResult(data) {
+        var resultDiv = document.getElementById('result');
+        resultDiv.innerHTML = 'Difference in http_req_duration avg: ' + data.duration_diff;
+      }
+    </script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from flask import Flask, render_template, request
 from azure.storage.blob import BlobServiceClient
 
