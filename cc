@@ -41,7 +41,49 @@ if __name__ == '__main__':
     app.run()
 
 
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Search</title>
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .content {
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>File Search</h1>
+    <form method="post">
+      <input type="text" name="search" placeholder="Search files" required>
+      <button type="submit">Search</button>
+    </form>
+    {% if data %}
+      <h2>Search Results:</h2>
+      {% for item in data %}
+        <li>
+          <div class="title">{{ item['title'] }}</div>
+          <div class="content">{{ item['content'] }}</div>
+        </li>
+      {% endfor %}
+    {% else %}
+      <p>No results found.</p>
+    {% endif %}
+  </body>
+</html>
 
 
 
