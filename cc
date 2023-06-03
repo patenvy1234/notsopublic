@@ -1,5 +1,102 @@
 from flask import Flask, render_template, request
 from azure.storage.blob import BlobServiceClient
+
+app = Flask(__name__)
+
+# Azure Blob Storage credentials
+connection_string = '<your_blob_connection_string>'
+container_name = '<your_container_name>'
+
+# Initialize Azure Blob Service
+blob_service_client = BlobServiceClient.from_connection_string(connection_string)
+container_client = blob_service_client.get_container_client(container_name)
+
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        selected_file = request.form['selected_file']
+        data = get_blob_contents(selected_file)
+        return render_template('index.html', data=data, selected_file=selected_file)
+    blob_names = get_blob_names()
+    return render_template('index.html', blob_names=blob_names)
+
+def get_blob_names():
+    blob_names = []
+    for blob in container_client.list_blobs():
+        if blob.name.endswith('.json'):
+            blob_names.append(blob.name)
+    return blob_names
+
+def get_blob_contents(blob_name):
+    blob_client = container_client.get_blob_client(blob_name)
+    blob_data = blob_client.download_blob().readall()
+    return blob_data.decode('utf-8')
+
+if __name__ == '__main__':
+    app.run()
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>File Search</title>
+    <style>
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      .content {
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>File Search</h1>
+    <form method="post">
+      <select name="selected_file">
+        {% for blob_name in blob_names %}
+          <option value="{{ blob_name }}">{{ blob_name }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Search</button>
+    </form>
+    {% if data %}
+      <h2>File: {{ selected_file }}</h2>
+      <pre>{{ data }}</pre>
+    {% else %}
+      <p>No file selected.</p>
+    {% endif %}
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+from flask import Flask, render_template, request
+from azure.storage.blob import BlobServiceClient
 import json
 
 app = Flask(__name__)
