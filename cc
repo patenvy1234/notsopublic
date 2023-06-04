@@ -1,3 +1,8 @@
+ jq -s '{load_test: .[0], spike_test: .[1]}' load_test1.json spike_test1.json > combined_test.json
+
+
+
+
 from flask import Flask, render_template, request, jsonify
 from azure.storage.blob import BlobServiceClient
 import json
