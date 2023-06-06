@@ -1,4 +1,25 @@
- jq -s '{load_test: .[0], spike_test: .[1]}' load_test1.json spike_test1.json > combined_test.json
+ import matplotlib.pyplot as plt
+
+person1 = {'height': 6.2, 'weight': 180, 'age': 30}
+person2 = {'height': 5.8, 'weight': 160, 'age': 35}
+
+fig, ax = plt.subplots()
+
+ax.barh(list(person1.keys()), list(person1.values()), color='b')
+ax.barh(list(person2.keys()), [-val for val in list(person2.values())], color='r')
+
+plt.xlabel('Value')
+plt.ylabel('Attribute')
+plt.title('Comparative Horizontal Bar Graph')
+
+plt.show()
+ 
+ 
+ 
+ 
+ 
+ 
+ -s '{load_test: .[0], spike_test: .[1]}' load_test1.json spike_test1.json > combined_test.json
 
 
 
