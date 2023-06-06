@@ -1,3 +1,37 @@
+ 
+ import matplotlib.pyplot as plt
+
+person1 = {'height': 6.2, 'weight': 180, 'age': 30}
+person2 = {'height': 5.8, 'weight': 160, 'age': 35}
+
+fig, ax = plt.subplots()
+
+ax.barh(list(person1.keys()), list(person1.values()), color='b')
+ax.barh(list(person2.keys()), [-val for val in list(person2.values())], color='r')
+
+# Add value labels to the bars
+for key, value in person1.items():
+    ax.text(value, list(person1.keys()).index(key), str(value), ha='left', va='center', color='b', fontweight='bold')
+
+for key, value in person2.items():
+    ax.text(-value, list(person2.keys()).index(key), str(value), ha='right', va='center', color='b', fontweight='bold')
+
+plt.xlabel('Value')
+plt.ylabel('Attribute')
+plt.title('Comparative Horizontal Bar Graph')
+
+plt.show()
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  import matplotlib.pyplot as plt
 
 person1 = {'height': 6.2, 'weight': 180, 'age': 30}
